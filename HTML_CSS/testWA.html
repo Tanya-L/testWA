@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,11 +14,29 @@
 <body>
     <main>
         <header>
-            <img src="logo.png" width="200px" id='logo'>
-            <div class="avatar">Harriet Henry<img style="width:50px;" src="profile.jpg" class="round"></div>
+            <div class="userbox">
+                    <div><img src="profile.jpg" class="round avatar" alt='avatar'></div>
+                    <div class='username'><i class="fas fa-caret-down"></i> Harriet Henry</div>
+            </div>
+
+            <div class="logo">
+                <img src="logo.png" width="150" class='logo' alt='logo'>
+            </div>
+
+
+
+
         </header>
         <nav>
-            <div class='active'><i class="fas fa-clock"></i> Tidrapportering</div>
+
+
+            <div class='active'>
+                <div class="clear"><i class="fas fa-clock"></i><a href="#"> Tidrapportering</a></div>
+                <div class='half-circle clear'> </div>
+            </div>
+
+
+
             <div><i class="fas fa-history"></i> Historik</div>
             <div><i class="far fa-clipboard"></i> Projekt</div>
             <div><i class="fas fa-list-ul"></i> Aktiviteter</div>
@@ -32,15 +51,18 @@
                     </div>
                     <div class='col-4'></div>
                 </section>
+
                 <section class="flex-grid">
                     <div class='col-8 withmargin'>
-                        <article id="left"></article>
+                        <article class="left"></article>
                     </div>
                     <div class='col-4'>
-                        <article id="right" class="withmargin"></article>
+                        <article class="right withmargin"></article>
+                    </div>
                 </section>
+
                 <section>
-                    <article id="bottom" class="withmargin"></article>
+                    <article class="bottom withmargin"></article>
                 </section>
             </div>
             <footer>
@@ -48,8 +70,6 @@
             </footer>
         </div>
     </main>
-</head>
-<body>
-    
 </body>
+
 </html>
