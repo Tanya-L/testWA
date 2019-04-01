@@ -1,14 +1,15 @@
 var TimeReport = {
     // A basic CRUD operation required data.
     timereports: [
-        { id: 1, project: 'project1', activity: 'activitet1', from: '', to: '', billable: '', note: '' },
-        { id: 2, project: 'project2', activity: 'activitet2', from: '', to: '', billable: '', note: '' },
-        { id: 3, project: 'project3', activity: 'activitet3', from: '', to: '', billable: '', note: '' },
+        { id: 1, project: 'project1', activity: 'activity1', from: '1', to: '2', billable: 'true', note: '1' },
+        { id: 2, project: 'project2', activity: 'activity2', from: '4', to: '8', billable: 'true', note: '2' },
+        { id: 3, project: 'project3', activity: 'activity3', from: '5', to: '6', billable: 'false', note: '3' },
     ],
     form: null,
     idCounter: 4, // IdCounter initial value is length of timeReports +1 
+    currentRow: null, 
 
-    crudTimeReport: function () {
+    fillTable: function () {
 
         var table = document.getElementsByTagName("table")[0];
         // delete all rows from second to before last
@@ -16,7 +17,8 @@ var TimeReport = {
             table.deleteRow(1);
         }
         // add rows using json data
-        for (var i = 0; i < TimeReport.timereports.length; i++) {
+        // use let instead of var, to create new copy of i variable for each loop step
+        for (let i = 0; i < TimeReport.timereports.length; i++) {
             // create a new row
             tr = table.insertRow(table.rows.length - 1);           
 
@@ -41,16 +43,25 @@ var TimeReport = {
             var button = document.createElement('button');
             button.innerHTML = "Redigera";
             button.addEventListener('click', function () {
-            })
+                TimeReport.currentRow = i;
+                var f = TimeReport.form.elements;
+                var row = TimeReport.timereports[i];
+                f.project.value = row.project;
+                f.activity.value = row.activity;
+                f.from.value = row.from;
+                f.to.value = row.to;
+                f.billable.checked = row.billable;
+                f.note.value = row.note;
+            });
             tabCell.appendChild(button);
 
             // create the button Radera
             var button = document.createElement('button');
             button.innerHTML = "Radera";
-            button.addEventListener('click', function () {
+            button.addEventListener('click', function (ev) {
                 if (window.confirm("Vill du Radera den här råd?")) {
-                    timereports.splice(i, 1);
-                    TimeReport.crudTimeReport();
+                    TimeReport.timereports.splice(i, 1);
+                    TimeReport.fillTable();
                 }
             })
             tabCell.appendChild(button);
@@ -85,13 +96,24 @@ var TimeReport = {
                     note: f.note.value
                 };
                 TimeReport.idCounter += 1;
-                TimeReport.timereports.push(row);
-                TimeReport.crudTimeReport();
+
+                // are we adding or editing?
+                if (TimeReport.currentRow == null) {
+                    TimeReport.timereports.push(row);
+                }
+                else {
+                    TimeReport.timereports.splice(TimeReport.currentRow, 1, row);
+                    TimeReport.currentRow = null;
+                }
+
+                TimeReport.fillTable();
+                TimeReport.form.reset();
             }
             ev.preventDefault();
         });
-        TimeReport.crudTimeReport();
+        TimeReport.fillTable();
     }
+
 }
 
 TimeReport.init();
